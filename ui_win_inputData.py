@@ -1,0 +1,92 @@
+# -*- coding: utf-8 -*-
+
+# Form implementation generated from reading ui file 'ui_win_inputData.ui'
+#
+# Created by: PyQt5 UI code generator 5.11.3
+#
+# WARNING! All changes made in this file will be lost!
+
+from PyQt5 import QtCore, QtGui, QtWidgets
+
+class Ui_Form(object):
+    def setupUi(self, Form):
+        Form.setObjectName("Form")
+        Form.resize(855, 534)
+        self.groupBox = QtWidgets.QGroupBox(Form)
+        self.groupBox.setGeometry(QtCore.QRect(15, 95, 416, 436))
+        self.groupBox.setObjectName("groupBox")
+        self.label_rawPic = QtWidgets.QLabel(self.groupBox)
+        self.label_rawPic.setGeometry(QtCore.QRect(5, 25, 396, 401))
+        font = QtGui.QFont()
+        font.setPointSize(28)
+        self.label_rawPic.setFont(font)
+        self.label_rawPic.setTextFormat(QtCore.Qt.AutoText)
+        self.label_rawPic.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_rawPic.setObjectName("label_rawPic")
+        self.groupBox_2 = QtWidgets.QGroupBox(Form)
+        self.groupBox_2.setGeometry(QtCore.QRect(15, 15, 826, 80))
+        self.groupBox_2.setObjectName("groupBox_2")
+        self.button_choosePic = QtWidgets.QPushButton(self.groupBox_2)
+        self.button_choosePic.setGeometry(QtCore.QRect(15, 35, 121, 32))
+        self.button_choosePic.setObjectName("button_choosePic")
+        self.edit_picPath = QtWidgets.QTextEdit(self.groupBox_2)
+        self.edit_picPath.setGeometry(QtCore.QRect(150, 35, 491, 31))
+        self.edit_picPath.setObjectName("edit_picPath")
+        self.groupBox_3 = QtWidgets.QGroupBox(Form)
+        self.groupBox_3.setGeometry(QtCore.QRect(430, 95, 406, 436))
+        self.groupBox_3.setObjectName("groupBox_3")
+        self.label_faceImg = QtWidgets.QLabel(self.groupBox_3)
+        self.label_faceImg.setGeometry(QtCore.QRect(105, 30, 181, 196))
+        self.label_faceImg.setText("")
+        self.label_faceImg.setPixmap(QtGui.QPixmap("../../../Pictures/IMG_0198.jpg"))
+        self.label_faceImg.setScaledContents(True)
+        self.label_faceImg.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_faceImg.setObjectName("label_faceImg")
+        self.list_nameInDB = QtWidgets.QListView(self.groupBox_3)
+        self.list_nameInDB.setGeometry(QtCore.QRect(230, 280, 166, 136))
+        self.list_nameInDB.setBaseSize(QtCore.QSize(2, 2))
+        self.list_nameInDB.setLineWidth(2)
+        self.list_nameInDB.setIconSize(QtCore.QSize(2, 2))
+        self.list_nameInDB.setLayoutMode(QtWidgets.QListView.Batched)
+        self.list_nameInDB.setViewMode(QtWidgets.QListView.IconMode)
+        self.list_nameInDB.setModelColumn(0)
+        self.list_nameInDB.setObjectName("list_nameInDB")
+        self.comboBox_chooseName = QtWidgets.QComboBox(self.groupBox_3)
+        self.comboBox_chooseName.setGeometry(QtCore.QRect(105, 235, 146, 46))
+        self.comboBox_chooseName.setObjectName("comboBox_chooseName")
+        self.label = QtWidgets.QLabel(self.groupBox_3)
+        self.label.setGeometry(QtCore.QRect(35, 250, 76, 16))
+        self.label.setObjectName("label")
+        self.button_lastFace = QtWidgets.QPushButton(self.groupBox_3)
+        self.button_lastFace.setGeometry(QtCore.QRect(20, 80, 65, 120))
+        self.button_lastFace.setObjectName("button_lastFace")
+        self.button_nextFace = QtWidgets.QPushButton(self.groupBox_3)
+        self.button_nextFace.setGeometry(QtCore.QRect(305, 80, 65, 120))
+        self.button_nextFace.setObjectName("button_nextFace")
+        self.button_nameConfirm = QtWidgets.QPushButton(self.groupBox_3)
+        self.button_nameConfirm.setGeometry(QtCore.QRect(255, 240, 114, 32))
+        self.button_nameConfirm.setObjectName("button_nameConfirm")
+        self.table_confirmedNames = QtWidgets.QTableView(self.groupBox_3)
+        self.table_confirmedNames.setGeometry(QtCore.QRect(25, 280, 171, 101))
+        self.table_confirmedNames.setObjectName("table_confirmedNames")
+        self.button_addData2DB = QtWidgets.QPushButton(self.groupBox_3)
+        self.button_addData2DB.setGeometry(QtCore.QRect(20, 385, 176, 32))
+        self.button_addData2DB.setObjectName("button_addData2DB")
+
+        self.retranslateUi(Form)
+        QtCore.QMetaObject.connectSlotsByName(Form)
+
+    def retranslateUi(self, Form):
+        _translate = QtCore.QCoreApplication.translate
+        Form.setWindowTitle(_translate("Form", "录入人脸数据"))
+        self.groupBox.setTitle(_translate("Form", "原始图像"))
+        self.label_rawPic.setText(_translate("Form", "请选择图片"))
+        self.groupBox_2.setTitle(_translate("Form", "请选择照片"))
+        self.button_choosePic.setText(_translate("Form", "选择图片"))
+        self.groupBox_3.setTitle(_translate("Form", "GroupBox"))
+        self.label.setText(_translate("Form", "请选择人名："))
+        self.button_lastFace.setText(_translate("Form", "上一张"))
+        self.button_nextFace.setText(_translate("Form", "下一张"))
+        self.button_nameConfirm.setText(_translate("Form", "确认"))
+        self.button_addData2DB.setText(_translate("Form", "录入数据库"))
+

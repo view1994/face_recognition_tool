@@ -1,29 +1,23 @@
 # -*- coding: utf-8 -*-
 # !/usr/local/bin/python3.6
-# file name: mainWin.py
+# file name: win_inputData.py
 from PyQt5 import QtCore, QtGui, QtWidgets
 '''
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 '''
-from ui_mainWin import Ui_MainWindow #ui_xx替换成ui文件的文件名
-class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
+from ui_win_inputData import Ui_Form #ui_xx替换成ui文件的文件名
+class Win_InputData(QtWidgets.QWidget, Ui_Form):
     def __init__(self, parent=None):
-        super(MainWindow, self).__init__(parent)
+        super(Win_InputData, self).__init__(parent)
         self.setupUi(self)
-        self.button_inputData.clicked.connect(self.button_inputData_clicked_Event)
-        self.button_recogFaceInPic.clicked.connect(self.button_recogFaceInPic_clicked_Event)
-        self.button_recogFaceInVideo.clicked.connect(self.button_recogFaceInVideo_clicked_Event)
+        #self.button_inputData.clicked.connect(self.button_inputData_clicked_Event)
+        #self.button_recogFaceInPic.clicked.connect(self.button_recogFaceInPic_clicked_Event)
+        #self.button_recogFaceInVideo.clicked.connect(self.button_recogFaceInVideo_clicked_Event)
     #添加若干个槽函数
     def button_inputData_clicked_Event(self):
-        from win_inputData import Win_InputData
         print('button_inputData clicked')
-        winInputData = Win_InputData()
-        winInputData.show()
-        self.hide()
-        print("show input data window")
-
     def button_recogFaceInPic_clicked_Event(self):
         print('button_recogFaceInPic clicked')
     def button_recogFaceInVideo_clicked_Event(self):

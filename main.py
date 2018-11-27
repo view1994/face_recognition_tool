@@ -8,7 +8,7 @@ import sys
 if __name__== "__main__":
     app= QtWidgets.QApplication(sys.argv)
     mainWindow = MainWindow()
-    #mainWindow.setupUi(Ui_MainWindow)
     mainWindow.show()
+    print("exit")
     sys.exit(app.exec_())
 
