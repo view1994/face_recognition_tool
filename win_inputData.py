@@ -7,8 +7,8 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 '''
-from ui_win_inputData import Ui_Form #ui_xx替换成ui文件的文件名
-class Win_InputData(QtWidgets.QWidget, Ui_Form):
+from ui_win_inputData import Ui_win_inputData #ui_xx替换成ui文件的文件名
+class Win_InputData(QtWidgets.QWidget, Ui_win_inputData):
     def __init__(self, parent=None):
         super(Win_InputData, self).__init__(parent)
         self.setupUi(self)

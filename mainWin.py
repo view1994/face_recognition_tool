@@ -18,11 +18,14 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     #添加若干个槽函数
     def button_inputData_clicked_Event(self):
         from win_inputData import Win_InputData
+        #import sys
         print('button_inputData clicked')
+        #app = QtWidgets.QApplication(sys.argv)
         winInputData = Win_InputData()
+        #self.hide()
         winInputData.show()
-        self.hide()
         print("show input data window")
+        #sys.exit(app.exec_())
 
     def button_recogFaceInPic_clicked_Event(self):
         print('button_recogFaceInPic clicked')
