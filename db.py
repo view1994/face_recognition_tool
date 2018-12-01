@@ -18,10 +18,7 @@ def get_features_of(name):
 #插入一张人脸信息，facial_feature为一条特征信息
 def insert_data(name,facial_feature):
     features = get_features_of(name)
-    print('1--',features,type(features))
-    s = set(features)
     features += [facial_feature]
-    print('2--', features, type(features))
     face_data.update({"name": name}, {'$set': {"facial_feature": features}},upsert=True)
 #获取所有人物名称
 def get_all_names():
@@ -32,7 +29,20 @@ def get_all_names():
 #删除某人的人脸信息
 def delet_data_of(name):
     face_data.remove({'name': name})
-
+#获取数据库中全部人物及数据量，供显示数据库信息使用
+def get_all_namesAndNum():
+    name_nums = []
+    for i in face_data.find():
+        name_nums.append([i['name'],len(i['facial_feature'])])
+    return name_nums
+#获取全部面部特征向量列表及与之对应的人物列表,供人脸匹配使用
+def get_all_features():
+    features = []
+    names = []
+    for i in face_data.find():
+        features += i['facial_feature']
+        names += [i['name']] * len(i['facial_feature'])
+    return features,names
 
 '''
 def test():
@@ -41,16 +51,17 @@ def test():
     insert_data(name, feature)
     print(get_all_names())
     print(get_features_of(name))
-    
+    print(get_all_features())
     name = 'bb'
     feature = [3,7,6,5]
     insert_data(name, feature)
     print(get_features_of(name))
     print(get_all_names())
+    print(get_all_features())
     delet_data_of(name)
     print(get_features_of(name))
     print(get_all_names())
-
+    print(get_all_features())
 
 #插入一条完整的信息，参数set为字典格式，包含'name','facial_feature'信息,'facial_feature'的值为列表
 def insert_set(set):
@@ -61,7 +72,6 @@ def insert_set(set):
 
 if __name__=="__main__":
     test()
-
 
 
 face_data.update({"name":"zhangsan"},{'$set':{"age":20}})
