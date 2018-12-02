@@ -44,21 +44,21 @@ def get_all_features():
         names += [i['name']] * len(i['facial_feature'])
     return features,names
 
-'''
+
 def test():
-    name = 'aa2'
+    name = 'wsx'
     feature = [1,2,3,4]
     insert_data(name, feature)
     print(get_all_names())
     print(get_features_of(name))
     print(get_all_features())
-    name = 'bb'
+    name = 'rfv'
     feature = [3,7,6,5]
     insert_data(name, feature)
     print(get_features_of(name))
     print(get_all_names())
     print(get_all_features())
-    delet_data_of(name)
+    #delet_data_of(name)
     print(get_features_of(name))
     print(get_all_names())
     print(get_all_features())
@@ -69,7 +69,7 @@ def insert_set(set):
     facial_feature = set['facial_feature']
     face_data.insert(set)
 
-
+'''
 if __name__=="__main__":
     test()
 
