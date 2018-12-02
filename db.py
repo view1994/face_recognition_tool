@@ -46,22 +46,20 @@ def get_all_features():
 
 
 def test():
-    name = 'wsx'
-    feature = [1,2,3,4]
+    import face_recognition
+    name = 'view'
+    VIEW_PIC_NAME = "/Users/tanyashi/Pictures/441542133958_.pic.jpg"
+    # 将jpg文件加载到numpy数组中
+    view_image = face_recognition.load_image_file(VIEW_PIC_NAME)
+    view_face_encoding = face_recognition.face_encodings(view_image)[0]
+    print(view_face_encoding)
+    feature = list(view_face_encoding)
     insert_data(name, feature)
     print(get_all_names())
     print(get_features_of(name))
     print(get_all_features())
-    name = 'rfv'
-    feature = [3,7,6,5]
-    insert_data(name, feature)
-    print(get_features_of(name))
-    print(get_all_names())
-    print(get_all_features())
-    #delet_data_of(name)
-    print(get_features_of(name))
-    print(get_all_names())
-    print(get_all_features())
+    delet_data_of('view')
+
 
 #插入一条完整的信息，参数set为字典格式，包含'name','facial_feature'信息,'facial_feature'的值为列表
 def insert_set(set):

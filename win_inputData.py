@@ -32,15 +32,15 @@ class Win_InputData(QWidget, Ui_win_inputData):
         self.edit_picPath.textChanged.connect(self.loadPicFileUsePath)
         self.button_nameConfirm.clicked.connect(self.addNameToCache)
         self.comboBox_chooseName.currentTextChanged.connect(self.addNewName)
-        model = QStandardItemModel()
-        model.setColumnCount(2)
-        model.setHeaderData(0,Qt.Horizontal,'name')
-        model.setHeaderData(1,Qt.Horizontal,"info_nums")
+        self.model = QStandardItemModel()
+        self.model.setColumnCount(2)
+        self.model.setHeaderData(0,Qt.Horizontal,'name')
+        self.model.setHeaderData(1,Qt.Horizontal,"info_nums")
         for i in range(len(db_name_num_list)):
             #print('name:',db_name_num_list[i][0],'\tnum=',db_name_num_list[i][1])
-            model.setItem(i,0,QStandardItem(db_name_num_list[i][0]))
-            model.setItem(i,1,QStandardItem(str(db_name_num_list[i][1])))
-        self.table_nameInDB.setModel(model)
+            self.model.setItem(i,0,QStandardItem(db_name_num_list[i][0]))
+            self.model.setItem(i,1,QStandardItem(str(db_name_num_list[i][1])))
+        self.table_nameInDB.setModel(self.model)
         self.table_nameInDB.setColumnWidth(self.table_nameInDB.width()/2,self.table_nameInDB.width()/2)
         self.model2 = QStandardItemModel()
         self.model2.setColumnCount(2)
@@ -49,12 +49,28 @@ class Win_InputData(QWidget, Ui_win_inputData):
         self.table_confirmedNames.setModel(self.model2)
         self.button_addData2DB.clicked.connect(self.addCache2DB)
     def addCache2DB(self):
+        global cache_data
         while cache_data:
             data = cache_data.pop()
             db.insert_data( data['name'], data['facial_feature'])
         self.checkCacheInfo()
+        self.checkDBInfo()
+
+    def checkDBInfo(self):
+        global db_name_list,db_name_num_list
+        db_name_list = db.get_all_names()
+        db_name_num_list = db.get_all_namesAndNum()
+        for i in range(len(db_name_num_list)):
+            #print('name:',db_name_num_list[i][0],'\tnum=',db_name_num_list[i][1])
+            self.model.setItem(i,0,QStandardItem(db_name_num_list[i][0]))
+            self.model.setItem(i,1,QStandardItem(str(db_name_num_list[i][1])))
+
     def checkCacheInfo(self):
         #print('cache_data:',cache_data)
+        self.model2.clear()
+        self.model2.setColumnCount(2)
+        self.model2.setHeaderData(0, Qt.Horizontal, 'name')
+        self.model2.setHeaderData(1, Qt.Horizontal, "face")
         for i in range(len(cache_data)):
             self.model2.setItem(i, 1, QStandardItem('第{}张'.format(cache_data[i]['index_now'])))
             self.model2.setItem(i, 0, QStandardItem(cache_data[i]['name']))
@@ -81,7 +97,7 @@ class Win_InputData(QWidget, Ui_win_inputData):
             self.addNewName()
         else:
             np_img = face_recog.faces_info[face_recog.face_now]['np_img']
-            new_encode = face_recog.get_face_encoding_of(np_img)[0]
+            new_encode = list(face_recog.get_face_encoding_of(np_img)[0])
             print(name,new_encode)
             #Qimg = face_recog.faces_info[face_recog.face_now]['Qimg']
             #print(new_encode)
