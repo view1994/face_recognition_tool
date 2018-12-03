@@ -2,6 +2,7 @@
 # -*- coding:utf-8 -*-
 
 from pymongo import MongoClient
+import numpy
 
 conn = MongoClient('localhost', 27017)#创建本地连接，localhost指本地连接
 db = conn.face_recog  #连接face_recog数据库，没有则自动创建
@@ -53,24 +54,28 @@ def test():
     view_image = face_recognition.load_image_file(VIEW_PIC_NAME)
     view_face_encoding = face_recognition.face_encodings(view_image)[0]
     print(view_face_encoding)
-    feature = list(view_face_encoding)
-    insert_data(name, feature)
-    print(get_all_names())
-    print(get_features_of(name))
-    print(get_all_features())
-    delet_data_of('view')
+    print('view_face_encoding',type(view_face_encoding),len(view_face_encoding))
+    feature = view_face_encoding.tolist()
+    print('feature',type(feature),len(feature))
+    encode = numpy.array( feature )
+    print(type(encode),len(encode))
+    #insert_data(name, feature)
+    #print(get_all_names())
+    #print(get_features_of(name))
+    #print(get_all_features())
+    #delet_data_of('view')
 
 
 #插入一条完整的信息，参数set为字典格式，包含'name','facial_feature'信息,'facial_feature'的值为列表
 def insert_set(set):
     name = set['name']
     facial_feature = set['facial_feature']
-    face_data.insert(set)
 
-'''
+
+
 if __name__=="__main__":
     test()
-
+'''
 
 face_data.update({"name":"zhangsan"},{'$set':{"age":20}})
 for i in face_data.find():

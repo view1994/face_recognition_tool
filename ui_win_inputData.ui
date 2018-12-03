@@ -12,8 +12,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>855</width>
-    <height>534</height>
+    <width>885</width>
+    <height>572</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -284,7 +284,7 @@
      <rect>
       <x>165</x>
       <y>50</y>
-      <width>86</width>
+      <width>91</width>
       <height>41</height>
      </rect>
     </property>
@@ -292,17 +292,30 @@
      <string>录入数据库</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="button_addData2DB_2">
+   <widget class="QPushButton" name="button_clearCache">
     <property name="geometry">
      <rect>
       <x>165</x>
       <y>100</y>
-      <width>86</width>
+      <width>91</width>
       <height>41</height>
      </rect>
     </property>
     <property name="text">
      <string>清空缓存</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="button_back2main">
+    <property name="geometry">
+     <rect>
+      <x>165</x>
+      <y>150</y>
+      <width>91</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>返回主界面</string>
     </property>
    </widget>
   </widget>

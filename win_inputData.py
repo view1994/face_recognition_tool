@@ -7,6 +7,7 @@ from PyQt5.QtCore import *
 import sys
 import myLib, face_recog ,cv2
 import db
+from face_recog import *
 from PIL import Image
 
 from ui_win_inputData import Ui_win_inputData #ui_xx替换成ui文件的文件名
@@ -48,6 +49,15 @@ class Win_InputData(QWidget, Ui_win_inputData):
         self.model2.setHeaderData(1, Qt.Horizontal, "face")
         self.table_confirmedNames.setModel(self.model2)
         self.button_addData2DB.clicked.connect(self.addCache2DB)
+        self.button_clearCache.clicked.connect(self.clearCache)
+        self.button_back2main.clicked.connect(self.back2main)
+    # 添加若干个槽函数
+    def back2main(self):
+        pass
+    def clearCache(self):
+        global cache_data
+        cache_data = []
+        self.checkCacheInfo()
     def addCache2DB(self):
         global cache_data
         while cache_data:
@@ -55,7 +65,6 @@ class Win_InputData(QWidget, Ui_win_inputData):
             db.insert_data( data['name'], data['facial_feature'])
         self.checkCacheInfo()
         self.checkDBInfo()
-
     def checkDBInfo(self):
         global db_name_list,db_name_num_list
         db_name_list = db.get_all_names()
@@ -64,7 +73,6 @@ class Win_InputData(QWidget, Ui_win_inputData):
             #print('name:',db_name_num_list[i][0],'\tnum=',db_name_num_list[i][1])
             self.model.setItem(i,0,QStandardItem(db_name_num_list[i][0]))
             self.model.setItem(i,1,QStandardItem(str(db_name_num_list[i][1])))
-
     def checkCacheInfo(self):
         #print('cache_data:',cache_data)
         self.model2.clear()
@@ -75,7 +83,6 @@ class Win_InputData(QWidget, Ui_win_inputData):
             self.model2.setItem(i, 1, QStandardItem('第{}张'.format(cache_data[i]['index_now'])))
             self.model2.setItem(i, 0, QStandardItem(cache_data[i]['name']))
         self.table_confirmedNames.setModel(self.model2)
-    #添加若干个槽函数
     def addNewName(self):
         name = self.comboBox_chooseName.currentText()
         if name == 'add new name':
@@ -88,7 +95,6 @@ class Win_InputData(QWidget, Ui_win_inputData):
                 self.comboBox_chooseName.setCurrentText(new_name)
             else:
                 self.comboBox_chooseName.setCurrentIndex(0)
-
     def addNameToCache(self):
         name = self.comboBox_chooseName.currentText()
         if name == 'choose name':
@@ -97,10 +103,7 @@ class Win_InputData(QWidget, Ui_win_inputData):
             self.addNewName()
         else:
             np_img = face_recog.faces_info[face_recog.face_now]['np_img']
-            new_encode = list(face_recog.get_face_encoding_of(np_img)[0])
-            print(name,new_encode)
-            #Qimg = face_recog.faces_info[face_recog.face_now]['Qimg']
-            #print(new_encode)
+            new_encode = get_face_encoding_of(np_img)
             new_data = {}
             new_data['name'] = name
             new_data['facial_feature'] = new_encode
@@ -108,7 +111,6 @@ class Win_InputData(QWidget, Ui_win_inputData):
             cache_data.append(new_data)
             cache_name_list.append(name)
             self.checkCacheInfo()
-
     def choosePic(self):
         fname, _ = myLib.loadPicFile(self)
         self.loadPicFile(fname)
@@ -120,8 +122,14 @@ class Win_InputData(QWidget, Ui_win_inputData):
         myLib.show_img_in_lable_center(self.label_rawPic, pix_map)
         face_recog.find_faces_in(fname)
         from face_recog import faces_info
-        self.label_recogNote.setText('已识别出{}张人脸，请为他们录入名字：\n第{}张：'.format(len(faces_info),face_recog.face_now+1))
-        self.label_faceImg.setPixmap(QPixmap.fromImage(faces_info[0]['Qimg']))
+        if len(faces_info):
+            self.label_recogNote.setText('已识别出{}张人脸，请为他们录入名字：\n第{}张：'.format(len(faces_info),face_recog.face_now+1))
+            self.label_faceImg.setPixmap(QPixmap.fromImage(faces_info[0]['Qimg']))
+            return True
+        else:
+            self.label_recogNote.setText('该图像中未识别出人脸,请重新选择照片。')
+            self.label_faceImg.setText('识别失败')
+            return False
     def loadPicFileUsePath(self):
         fname = self.edit_picPath.toPlainText()
         if '\n' in fname:

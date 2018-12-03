@@ -35,15 +35,28 @@ def find_faces_in(f_name):
         np_img = get_img_by_location(image,face_location)
         face['location'] = face_location
         face['np_img'] = np_img
-        img2 = cv2.resize(src=np_img, dsize=None, fx=0.2, fy=0.2)
+        img2 = cv2.resize(src=np_img, dsize=None, fx=1, fy=1)
         face['Qimg'] = QImage(img2[:], img2.shape[1], img2.shape[0], img2.shape[1] * 3, QImage.Format_RGB888)
         faces_info.append(face)
         #print('\n========face[img]======\n',face['img'])
     return faces_info
-
+#返回单张脸的list型特征数据
 def get_face_encoding_of(face_image):
-    return face_recognition.face_encodings(face_image)
-
+    encode_nparray = face_recognition.face_encodings(face_image)[0]
+    encode_list = encode_nparray.tolist()
+    return encode_list
+def get_encoding_array_from(li):
+    import numpy
+    return numpy.array(li)
+def get_featuresArray_fromDB():
+    from db import get_all_features
+    features_li , names = get_all_features()
+    features_ar = []
+    for i in features_li:
+        features_ar.append(get_encoding_array_from(i))
+    return features_ar,names
+def find_name_of(np_img):
+    pass
 def main():
     pass
 
