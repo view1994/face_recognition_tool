@@ -11,6 +11,7 @@ from myLib import *
 from ui_mainWin import Ui_MainWindow #ui_xx替换成ui文件的文件名
 from win_inputData import Win_InputData
 from win_recogFaceInVideo import Win_RecogFaceInVideo
+from win_recogFaceInPic import Win_RecogFaceInPic
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self, parent=None):
@@ -27,7 +28,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.close()
         winInputData.show()
     def button_recogFaceInPic_clicked_Event(self):
-        winRecogeFaceInVideo = Win_RecogFaceInVideo()
+        winRecogeFaceInVideo = Win_RecogFaceInPic()
         self.windowList.append(winRecogeFaceInVideo)
         self.close()
         winRecogeFaceInVideo.show()

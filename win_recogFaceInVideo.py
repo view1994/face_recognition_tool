@@ -8,11 +8,8 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtCore import QTimer
 import sys
-import myLib, face_recog ,cv2
-
+import myLib, face_recog
 from face_recog import *
-
-
 
 class Win_RecogFaceInVideo(QWidget, Ui_win_recogFaceInVideo):
     def __init__(self, parent=None ):
