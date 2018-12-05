@@ -9,7 +9,7 @@ import myLib, face_recog ,cv2
 import db
 from face_recog import *
 from PIL import Image
-
+#from mainWin import MainWindow
 from ui_win_inputData import Ui_win_inputData #ui_xx替换成ui文件的文件名
 cache_data = []
 cache_name_list = []
@@ -50,10 +50,16 @@ class Win_InputData(QWidget, Ui_win_inputData):
         self.table_confirmedNames.setModel(self.model2)
         self.button_addData2DB.clicked.connect(self.addCache2DB)
         self.button_clearCache.clicked.connect(self.clearCache)
-        self.button_back2main.clicked.connect(self.back2main)
+        self.button_back2main.clicked.connect(self.close)
     # 添加若干个槽函数
-    def back2main(self):
-        pass
+    windowList = []
+    ###### 重写关闭事件，回到第一界面
+    def closeEvent(self, event):
+        from mainWin import MainWindow
+        mainWin = MainWindow()
+        self.windowList.append(mainWin)  ##注：没有这句，是不打开另一个主界面的！
+        mainWin.show()
+        event.accept()
     def clearCache(self):
         global cache_data
         cache_data = []
@@ -112,7 +118,7 @@ class Win_InputData(QWidget, Ui_win_inputData):
             cache_name_list.append(name)
             self.checkCacheInfo()
     def choosePic(self):
-        fname, _ = myLib.loadPicFile(self)
+        fname, _ = myLib.loadFile(self,'p')
         self.loadPicFile(fname)
         self.check_buttonStatus()
         self.edit_picPath.setText(fname)
