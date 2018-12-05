@@ -22,22 +22,19 @@ class Win_RecogFaceInVideo(QWidget, Ui_win_recogFaceInVideo):
         self.button_openCamera.setAutoExclusive(True)
         self.button_openCamera.clicked.connect(self.recog_in_camera)
         self.button_openVideoFile.clicked.connect(self.open_video_file)
-        self.commandLinkButton.clicked.connect(self.back2main)
+        self.commandLinkButton.clicked.connect(self.close)
         #self.button_openCamera.triggered.connect(self.close_camera())
     windowList = []
     ###### 重写关闭事件，回到第一界面
     def closeEvent(self, event):
+        if self.button_openCamera.isChecked():
+            self.close_camera()
+        cv2.destroyAllWindows()
         from mainWin import MainWindow
         mainWin = MainWindow()
         self.windowList.append(mainWin)  ##注：没有这句，是不打开另一个主界面的！
         mainWin.show()
         event.accept()
-    def back2main(self):
-        print('video_capture.release')
-        if self.button_openCamera.isChecked():
-            self.close_camera()
-        cv2.destroyAllWindows()
-        self.close()
 
     video_capture = []
     def open_video_file(self):
