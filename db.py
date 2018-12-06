@@ -45,8 +45,8 @@ def get_all_features():
         names += [i['name']] * len(i['facial_feature'])
     return features,names
 
-
-def test():
+if __name__=="__main__":
+    '''
     import face_recognition
     name = 'view'
     VIEW_PIC_NAME = "/Users/tanyashi/Pictures/441542133958_.pic.jpg"
@@ -64,22 +64,4 @@ def test():
     #print(get_features_of(name))
     #print(get_all_features())
     #delet_data_of('view')
-
-
-#插入一条完整的信息，参数set为字典格式，包含'name','facial_feature'信息,'facial_feature'的值为列表
-def insert_set(set):
-    name = set['name']
-    facial_feature = set['facial_feature']
-
-
-
-if __name__=="__main__":
-    test()
-'''
-
-face_data.update({"name":"zhangsan"},{'$set':{"age":20}})
-for i in face_data.find():
-    print(i)
-for i in face_data.find({"name":"zhangsan"}):
-    print(i)
-'''
+    '''

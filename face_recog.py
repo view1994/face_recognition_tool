@@ -3,14 +3,18 @@
 import cv2
 from PIL import Image
 import face_recognition
+import numpy
 from PyQt5 import QtGui
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
+from db import get_all_features
 
 faces_info = []
 face_num = 0
 face_now = 0
+known_face_encodings = []
+known_face_names = []
 def find_faces_locations_in(f_name):
     # 将jpg文件加载到numpy 数组中
     image = face_recognition.load_image_file(f_name)
@@ -21,6 +25,18 @@ def find_faces_locations_in(f_name):
 
 def get_img_by_location(img,location):
     top, right, bottom, left = location
+    print(top, bottom, left, right,'raw')
+    w = right - left
+    h = bottom - top
+    top = int(top - h / 5.0)
+    top = top if top >= 0 else 0
+    bottom = int(bottom + h / 5.0)
+    bottom = bottom if bottom <= img.shape[0] else img.shape[0]
+    right = int(right + w / 5.0)
+    right = right if right <= img.shape[1] else img.shape[1]
+    left = int(left - h / 5.0)
+    left = left if left >= 0 else 0
+    print(top,bottom,left,right)
     return img[top:bottom, left:right]
 
 def find_faces_in(f_name):
@@ -38,29 +54,67 @@ def find_faces_in(f_name):
         img2 = cv2.resize(src=np_img, dsize=None, fx=1, fy=1)
         face['Qimg'] = QImage(img2[:], img2.shape[1], img2.shape[0], img2.shape[1] * 3, QImage.Format_RGB888)
         faces_info.append(face)
-        #print('\n========face[img]======\n',face['img'])
     return faces_info
 #返回单张脸的list型特征数据
 def get_face_encoding_of(face_image):
     encode_nparray = face_recognition.face_encodings(face_image)[0]
     encode_list = encode_nparray.tolist()
     return encode_list
-def get_encoding_array_from(li):
-    import numpy
-    return numpy.array(li)
+
 def get_featuresArray_fromDB():
-    from db import get_all_features
     features_li , names = get_all_features()
-    features_ar = []
+    features_array = []
     for i in features_li:
-        features_ar.append(get_encoding_array_from(i))
-    return features_ar,names
-def find_name_of(np_img):
-    pass
-def main():
-    pass
+        features_array.append(numpy.array(i))
+    return features_array,names
 
+def update_knownFace_list():
+    global known_face_encodings, known_face_names
+    known_face_encodings, known_face_names = get_featuresArray_fromDB()
 
-if __name__ == '__main__':
-    main()
+#视频和图片通用:
+#video call: recog_in( bgrframe , update_features  = False ,frame_type = 'bgr_frame',scale_rate = 4.0 )
+#pic call: recog_in( rgbframe , update_features  = True , frame_type = 'rgb_frame',scale_rate = 1.0 )
+def recog_in( frame , update_features  = True ,frame_type = 'rgb',scale_rate = 1.0 ):
+    #预处理
+    if update_features :
+        update_knownFace_list()
+    if scale_rate != 1.0 :
+        frame2 = cv2.resize(frame, (0, 0), fx = (1/scale_rate) , fy = ( 1/scale_rate ) )
+    else:
+        frame2 = frame
+    if frame_type == "rgb":
+        rgb_frame= frame
+        bgr_frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)  #cv画图用
+    else:
+        rgb_frame = cv2.cvtColor(frame2, cv2.COLOR_BGR2RGB)
+        bgr_frame = frame
+    #编码
+    face_locations = face_recognition.face_locations(rgb_frame)
+    face_encodings = face_recognition.face_encodings(rgb_frame, face_locations)
+    face_names = []
+    for face_encoding in face_encodings:
+        # 默认为unknown
+        matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
+        name = "Unknown"
+        if True in matches:
+            first_match_index = matches.index(True)
+            name = known_face_names[first_match_index]
+        face_names.append(name)
+    # 将捕捉到的人脸标记出来
+    for (top, right, bottom, left), name in zip(face_locations, face_names):
+        # Scale back up face locations since the frame we detected in was scaled to 1/4 size
+        top = int(top * scale_rate)      #视频 scale_rate = 4
+        right =int(right * scale_rate)
+        bottom = int(bottom * scale_rate)
+        left = int(left * scale_rate)
+        # 矩形框
+        cv2.rectangle(bgr_frame, (left, top), (right, bottom), (0, 0, 255), 2)
+        # 加上标签
+        cv2.rectangle(bgr_frame, (left, bottom - 35), (right, bottom), (0, 0, 255), cv2.FILLED)
+        font = cv2.FONT_HERSHEY_DUPLEX
+        cv2.putText(bgr_frame, name, (left + 6, bottom - 6), font, 2.0, (255, 255, 255), 1)
+    rgb_npImg = cv2.cvtColor(bgr_frame, cv2.COLOR_BGR2RGB)
+    Qimg = QImage(rgb_npImg[:], rgb_npImg.shape[1], rgb_npImg.shape[0], rgb_npImg.shape[1] * 3, QImage.Format_RGB888)
+    return Qimg
 

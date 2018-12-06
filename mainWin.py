@@ -1,12 +1,6 @@
 # -*- coding: utf-8 -*-
 # !/usr/local/bin/python3.6
 # file name: mainWin.py
-from PyQt5 import QtCore, QtGui, QtWidgets
-'''
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
-'''
 from myLib import *
 from ui_mainWin import Ui_MainWindow #ui_xx替换成ui文件的文件名
 from win_inputData import Win_InputData
@@ -38,7 +32,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.close()
         winRecogeFaceInVideo.show()
     def loadFile(self):
-        print("load--file")
         # QFileDialog就是系统对话框的那个类,第一个参数是上下文，第二个参数是弹框的名字，第三个参数是开始打开的路径，第四个参数是需要的格式
         fname, _ = QtWidgets.QFileDialog.getOpenFileName(self, '选择图片', '/Users/tanyashi/Pictures', 'Image files(*.jpg *.gif *.jpeg *.png)')
         pix_map = QtGui.QPixmap(fname)

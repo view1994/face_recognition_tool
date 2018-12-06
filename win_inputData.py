@@ -1,15 +1,9 @@
 # -*- coding: utf-8 -*-
 # !/usr/local/bin/python3.6
 # file name: win_inputData.py
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
-import sys
-import myLib, face_recog ,cv2
+import myLib, face_recog
 import db
 from face_recog import *
-from PIL import Image
-#from mainWin import MainWindow
 from ui_win_inputData import Ui_win_inputData #ui_xx替换成ui文件的文件名
 cache_data = []
 cache_name_list = []
@@ -118,10 +112,11 @@ class Win_InputData(QWidget, Ui_win_inputData):
             cache_name_list.append(name)
             self.checkCacheInfo()
     def choosePic(self):
-        fname, _ = myLib.loadFile(self,'p')
-        self.loadPicFile(fname)
-        self.check_buttonStatus()
-        self.edit_picPath.setText(fname)
+        fname, ret = myLib.loadFile(self,'p')
+        if ret :
+            self.loadPicFile(fname)
+            self.check_buttonStatus()
+            self.edit_picPath.setText(fname)
     def loadPicFile(self,fname):
         print(fname)
         pix_map = QPixmap(fname)
@@ -169,10 +164,11 @@ class Win_InputData(QWidget, Ui_win_inputData):
             face_recog.face_now = face_now + 1
             self.label_faceImg.setPixmap(QPixmap.fromImage(faces_info[face_recog.face_now]['Qimg']))
         self.check_buttonStatus()
-
+'''
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     winInputData = Win_InputData()
     winInputData.show()
     print("show input data window")
     sys.exit(app.exec_())
+'''

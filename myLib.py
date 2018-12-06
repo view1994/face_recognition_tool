@@ -15,11 +15,11 @@ def loadFile(self , fileType):
     if fileType in ['p','P','photo','pic','*.jpg',' *.gif ','*.jpeg',' *.png']:
         type =  'Image files(*.jpg *.gif *.jpeg *.png)'
         title = '加载图片'
-        path = '/Users/tanyashi/Pictures'
+        path = './'
     elif fileType in ['v','V','video','mp4','*.mp4',' *.avi','*.mkv',' *.mov']:
         type = 'Video files(*.mp4 *.avi *.mkv *.mov)'
         title = '加载视频'
-        path = '/Users/tanyashi/Movies'
+        path = './'
     return  QtWidgets.QFileDialog.getOpenFileName( self , title, path ,type)
 
 
@@ -41,14 +41,7 @@ def show_img_in_lable_center( label, pix_map):
     else:
         w = img_w
         h = img_h
-    #print('img_w={},img_h={},lab_w={},lab_h={},w={},h={}'.format(img_w, img_h, lab_w, lab_h, w, h))
     label.setPixmap(pix_map.scaled(w, h))
 
 
 
-
-if __name__ == '__main__':
-    pass
-'''
-
-'''
