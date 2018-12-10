@@ -46,6 +46,7 @@ def get_all_features():
     return features,names
 
 if __name__=="__main__":
+    delet_data_of('高')
     '''
     import face_recognition
     name = 'view'

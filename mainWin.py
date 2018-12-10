@@ -18,16 +18,22 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     windowList = []
     def button_inputData_clicked_Event(self):
         winInputData = Win_InputData()
+        winInputData.setWindowFlags(winInputData.windowFlags() & ~ QtCore.Qt.WindowMaximizeButtonHint)
+        winInputData.setFixedSize(winInputData.width(), winInputData.height())
         self.windowList.append(winInputData)
         self.close()
         winInputData.show()
     def button_recogFaceInPic_clicked_Event(self):
         winRecogeFaceInVideo = Win_RecogFaceInPic()
+        winRecogeFaceInVideo.setWindowFlags(winRecogeFaceInVideo.windowFlags() & ~ QtCore.Qt.WindowMaximizeButtonHint)
+        winRecogeFaceInVideo.setFixedSize(winRecogeFaceInVideo.width(), winRecogeFaceInVideo.height())
         self.windowList.append(winRecogeFaceInVideo)
         self.close()
         winRecogeFaceInVideo.show()
     def button_recogFaceInVideo_clicked_Event(self):
         winRecogeFaceInVideo = Win_RecogFaceInVideo()
+        winRecogeFaceInVideo.setWindowFlags(winRecogeFaceInVideo.windowFlags() & ~ QtCore.Qt.WindowMaximizeButtonHint)
+        winRecogeFaceInVideo.setFixedSize(winRecogeFaceInVideo.width(), winRecogeFaceInVideo.height())
         self.windowList.append(winRecogeFaceInVideo)
         self.close()
         winRecogeFaceInVideo.show()

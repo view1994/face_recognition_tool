@@ -8,6 +8,8 @@ import sys
 if __name__== "__main__":
     app= QtWidgets.QApplication(sys.argv)
     mainWindow = MainWindow()
+    mainWindow.setWindowFlags(mainWindow.windowFlags() &~ QtCore.Qt.WindowMaximizeButtonHint)
+    mainWindow.setFixedSize( mainWindow.width() , mainWindow.height() )
     mainWindow.show()
     sys.exit(app.exec_())
 

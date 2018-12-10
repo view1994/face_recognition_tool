@@ -17,6 +17,9 @@ class Win_InputData(QWidget, Ui_win_inputData):
         nameList = ['choose name']
         nameList += db_name_list
         nameList.append('add new name')
+        global cache_data,cache_name_list
+        cache_data = []
+        cache_name_list = []
         print(nameList)
         self.comboBox_chooseName.addItems(nameList)
         self.button_choosePic.clicked.connect(self.choosePic)
@@ -45,6 +48,7 @@ class Win_InputData(QWidget, Ui_win_inputData):
         self.button_addData2DB.clicked.connect(self.addCache2DB)
         self.button_clearCache.clicked.connect(self.clearCache)
         self.button_back2main.clicked.connect(self.close)
+        self.flag =True
     # 添加若干个槽函数
     windowList = []
     ###### 重写关闭事件，回到第一界面
@@ -84,17 +88,20 @@ class Win_InputData(QWidget, Ui_win_inputData):
             self.model2.setItem(i, 0, QStandardItem(cache_data[i]['name']))
         self.table_confirmedNames.setModel(self.model2)
     def addNewName(self):
-        name = self.comboBox_chooseName.currentText()
-        if name == 'add new name':
-            new_name, ok = QInputDialog.getText(self, "add new name", "请输入新名字\n注意：不要与已有名字相同！", QLineEdit.Normal, "")
-            name_list = set(cache_name_list + db_name_list)
-            if ok & (new_name not in name_list):
-                #cache_data.append(new_data)
-                cache_name_list.append(new_name)
-                self.comboBox_chooseName.insertItem(1, new_name)
-                self.comboBox_chooseName.setCurrentText(new_name)
-            else:
-                self.comboBox_chooseName.setCurrentIndex(0)
+        if self.flag :
+            name = self.comboBox_chooseName.currentText()
+            if name == 'add new name':
+                new_name, ok = QInputDialog.getText(self, "add new name", "请输入新名字\n注意：不要与已有名字相同！", QLineEdit.Normal, "")
+                name_list = set(cache_name_list + db_name_list)
+                if ok & (new_name not in name_list):
+                    cache_name_list.append(new_name)
+                    self.flag = False
+                    self.comboBox_chooseName.insertItem(1, new_name)
+                    self.comboBox_chooseName.setCurrentText(new_name)
+                else:
+                    self.comboBox_chooseName.setCurrentIndex(0)
+        else:
+            self.flag = True
     def addNameToCache(self):
         name = self.comboBox_chooseName.currentText()
         if name == 'choose name':
