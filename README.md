@@ -28,11 +28,12 @@
 groupBox1：用户从本机中选择一张照片打开，原图显示在界面的左侧的groupBox1中，点击“识别图中人脸”按钮，软件识别出图中所有人脸。
 groupBox2：在界面中间的groupBox2中显示出识别出的第一张人脸头像，头像下方的选项框可选择数据库中已有数据的人名，也可以添加新人物名，用户写好名字后点击“确认按钮”，提取出该头像的面部特征信息编码，每张脸的特征编码都是一条128维的向量，将该组姓名和特征编码加入缓存中，用户点击下一张按钮，跳到下一张人脸头像，等待用户确认姓名。以此循环，直到用户确认完识别出的全部头像名字后，用户点击“提交数据库”按钮，则将缓存中数据逐条更新到数据库。
 groupBox3：包含两个table，第一个table用于显示已确认名字的缓存数据，第二个table主要用于显示数据库中已存入的所有人物名字和对应的面部特征信息条数。用户每提交一次人物信息，更新一次此table。
+![录入人脸数据窗口初识状态](https://img-blog.csdnimg.cn/20181210225204398.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3ZpZXc5OTQ=,size_16,color_FFFFFF,t_70)
 ![录入人脸数据](https://img-blog.csdnimg.cn/20181211000834313.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3ZpZXc5OTQ=,size_16,color_FFFFFF,t_70)
 
 **识别图中人脸**窗口有以下功能：
 用户从本机中选择一张照片打开，原图显示在界面中，点击“识别人物”按钮，软件先定位出照片中所有人脸并用方框标出，然后依次将识别出的人脸与数据库中的所有特征编码比对，匹配成功则在显示的方框下方显示人物名字（绿色），匹配失败则提示“unknown”（红色）。
-![识别图中人脸](https://img-blog.csdnimg.cn/20181210234133636.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3ZpZXc5OTQ=,size_16,color_FFFFFF,t_70)
+![识别图中人脸](https://img-blog.csdnimg.cn/20181210234732434.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3ZpZXc5OTQ=,size_16,color_FFFFFF,t_70)
 
 **识别视频画面中人脸**窗口有以下功能：
 用户点击“启动摄像头”按钮启动本机摄像头，或点击“打开视频文件”按钮选择视频文件，视频画面显示在界面中间，点击“识别人脸”按钮后，软件识别画面中人脸，与数据库中面部特征比对，找到匹配的人物则在画面中标出绿色人名，否则用红色标记出“unknown”。
